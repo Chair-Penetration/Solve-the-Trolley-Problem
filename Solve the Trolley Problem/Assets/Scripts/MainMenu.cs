@@ -15,9 +15,14 @@ public class MainMenu : MonoBehaviour
         _optionsMenu.SetActive(false);
     }
 
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
     public void PressStart()
     {
-        SceneManager.LoadScene(1);
+        LoadScene(1);
     }
 
     public void PressOptions()
@@ -28,5 +33,10 @@ public class MainMenu : MonoBehaviour
     public void PressExit()
     {
         Application.Quit();
+    }
+
+    public void PressReturnToMenu()
+    {
+        LoadScene(0);
     }
 }
