@@ -36,5 +36,7 @@ public class LocationPopUp : MonoBehaviour
 
         // Ensure the text is fully transparent at the end
         TmpText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
+        this.gameObject.SetActive(false);
+        TmpText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 225); // In case I want to reload the location message
     }
 }

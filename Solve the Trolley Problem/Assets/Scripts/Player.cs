@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,32 +7,40 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _avatar;
     [SerializeField] private Collider2D _collider;
+    [SerializeField] private GameObject _interactionBox;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private Vector2 _movement;
     [SerializeField] private float _minY;
     [SerializeField] private float _maxY;
     [SerializeField] private float _minScale;
     [SerializeField] private float _maxScale;
-    [SerializeField] private GameObject _optionsMenu;
+    [SerializeField] private bool _allowedToMove;
+    [SerializeField] private bool _talking;
+    [SerializeField] private Interactable _interactingWith;
 
     public SpriteRenderer Avatar { get { return _avatar; } }
     public Collider2D Collider { get { return _collider; } }
+    public GameObject InteractionBox { get { return _interactionBox; } }
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
     public Vector2 Movement { get { return _movement; } }
     public float MinY { get { return _minY; } }
     public float MaxY { get { return _maxY; } }
     public float MinScale { get { return _minScale; } }
     public float MaxScale { get { return _maxScale; } }
-    public GameObject OptionsMenu { get { return _optionsMenu; } }
+    public bool AllowedToMove { get { return _allowedToMove; } set { _allowedToMove = value; } }
+    public bool Talking { get { return _talking; } set { _talking = value; } }
+    public Interactable InteractingWith { get { return _interactingWith; } set { _interactingWith = value; } }
 
     void Start()
     {
+        _interactionBox = GameObject.FindGameObjectWithTag("PlayerIBox");
         _movement = new Vector2(0, 0);
+        _allowedToMove = true;
     }
 
     void Update()
     {
-        if (!OptionsMenu.active)
+        if (AllowedToMove)
         {
             // Get input from keyboard (WASD or Arrow keys)
             _movement.x = Input.GetAxisRaw("Horizontal");
@@ -40,10 +49,12 @@ public class Player : MonoBehaviour
             if (_movement.x > 0) // Moving right
             {
                 Avatar.flipX = false;
+                InteractionBox.transform.SetLocalPositionAndRotation(new Vector2(0.5f, 0f), InteractionBox.transform.localRotation);
             }
             else if (_movement.x < 0) // Moving left
             {
                 Avatar.flipX = true;
+                InteractionBox.transform.SetLocalPositionAndRotation(new Vector2(-0.5f, 0f), InteractionBox.transform.localRotation);
             }
 
             float currentY = transform.position.y;
@@ -61,7 +72,7 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!OptionsMenu.active)
+        if (AllowedToMove)
         {
             // Move the player character
             transform.Translate(Movement * MoveSpeed * Time.fixedDeltaTime);
