@@ -9,11 +9,13 @@ public class Interactable : MonoBehaviour
     [SerializeField] private Collider2D _playerIBox;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject _dialogueBox;
+    [SerializeField] private bool _interactionFinished;
     public Collider2D Interaction { get { return _interaction; } }
     public Player Player { get { return _player; } }
     public Collider2D PlayerIBox { get { return _playerIBox; } }
     public GameObject Indicator { get { return _indicator; } }
-    public GameObject DialogueBox {  get { return _dialogueBox; } }
+    public GameObject DialogueBox { get { return _dialogueBox; } }
+    public bool InteractionFinished { get { return _interactionFinished; } set { _interactionFinished = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,7 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Interaction.IsTouching(PlayerIBox) && (Player.InteractingWith == this || Player.InteractingWith == null))
+        if (!InteractionFinished && Interaction.IsTouching(PlayerIBox) && (Player.InteractingWith == this || Player.InteractingWith == null))
         {
             Player.InteractingWith = this;
             Indicator.SetActive(true);
