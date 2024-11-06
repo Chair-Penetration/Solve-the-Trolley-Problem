@@ -778,6 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _optionsMenu: {fileID: 1162036173}
+  _player: {fileID: 0}
 --- !u!4 &740178314
 Transform:
   m_ObjectHideFlags: 0
