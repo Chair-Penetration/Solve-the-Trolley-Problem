@@ -39,7 +39,7 @@ public class SceneData : MonoBehaviour
             {
                 data = scene;
                 data.GetComponent<SceneData>().Menu = _menu;
-                data.GetComponent<SceneData>().UpdateMenuPlayerName();
+                //data.GetComponent<SceneData>().UpdateMenuPlayerName();
                 _menu.Data = data.GetComponent<SceneData>();
                 Destroy(gameObject);
             }
@@ -55,7 +55,6 @@ public class SceneData : MonoBehaviour
 
     public void UpdateSceneInteractables()
     {
-        SetPlayerPosition();
         List<Interactable> interactables = Menu.Interactables;
 
         foreach (InteractableSubData save in Saves)
@@ -73,7 +72,6 @@ public class SceneData : MonoBehaviour
 
     public List<InteractableSubData> GetInteractableScripts() // executed after SceneLoad
     {
-        SetPlayerPosition();
         List<Interactable> interactables = Menu.Interactables;
         List<InteractableSubData> scripts = new List<InteractableSubData>();
 
@@ -107,8 +105,6 @@ public class SceneData : MonoBehaviour
                 }
             }
         }
-
-        SavePlayerPosition();
     }
 
     public void SetPlayerPosition()
@@ -134,8 +130,7 @@ public class SceneData : MonoBehaviour
 
     public void UpdateMenuPlayerName()
     {
-        GameObject textArea = Menu.OptionsMenu.transform.GetChild(0).GetChild(0).gameObject;
-        GameObject text = textArea.transform.GetChild(textArea.transform.childCount - 1).gameObject;
-        text.GetComponent<TextMeshProUGUI>().text = this.PlayerData.SaveData.Name;
+        GameObject text = Menu.OptionsMenu.transform.GetChild(0).gameObject;
+        text.GetComponent<TMP_InputField>().text = this.PlayerData.SaveData.Name;
     }
 }

@@ -36,6 +36,7 @@ public class MainMenu : MonoBehaviour
                 Data.Saves = Data.GetInteractableScripts();
             else
                 Data.UpdateSceneInteractables();
+            Data.SetPlayerPosition();
             Data.UpdateMenuPlayerName();
         }
     }
@@ -43,7 +44,10 @@ public class MainMenu : MonoBehaviour
     public void LoadScene(int index)
     {
         if (Data is not null)
+        {
             Data.SaveSceneData();
+            Data.SavePlayerPosition();
+        }
         SceneManager.LoadScene(index);
     }
 
