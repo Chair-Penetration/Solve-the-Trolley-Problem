@@ -53,7 +53,10 @@ public class MainMenu : MonoBehaviour
 
     public void PressStart()
     {
-        LoadScene(1);
+        int lastScene = 1;
+        if (Data is not null)
+            lastScene = Data.PlayerData.SaveData.LastScene;
+        LoadScene(lastScene);
     }
 
     public void PressOptions()
@@ -76,6 +79,8 @@ public class MainMenu : MonoBehaviour
 
     public void PressReturnToMenu()
     {
+        if (Data is not null)
+            Data.PlayerData.SaveData.LastScene = SceneManager.GetActiveScene().buildIndex;
         LoadScene(0);
     }
 

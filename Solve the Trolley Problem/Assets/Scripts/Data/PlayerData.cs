@@ -34,6 +34,7 @@ public class PlayerData : MonoBehaviour
         {
             _saveData = Instantiate(_saveDataPrefab, gameObject.transform).GetComponent<PlayerSubData>();
             _saveData.Name = "Nameless";
+            _saveData.LastScene = 1;
             AcquirePlayer();
             DontDestroyOnLoad(transform.gameObject);
         }
