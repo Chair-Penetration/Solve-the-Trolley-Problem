@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor.ShaderKeywordFilter;
@@ -12,40 +13,49 @@ public class SceneData : MonoBehaviour
     [SerializeField] private GameObject _saveDataPrefab;
     [SerializeField] private MainMenu _menu;
     [SerializeField] private List<InteractableSubData> _saves;
-    [SerializeField] private GameObject _data;
+    [SerializeField] private PlayerData _playerData;
+    [SerializeField] private float _pLocX, _pLocY; // scale is modified automatically
+    [SerializeField] private bool _flipped; // saves the direction the player is facing
 
-    public GameObject SaveDataPrefab { get {  return _saveDataPrefab; } }
+
     public MainMenu Menu { get { return _menu; } set { _menu = value; } }
     public List<InteractableSubData> Saves { get { return _saves; } set { _saves = value; } }
+    public PlayerData PlayerData { get { return _playerData; } }//set { _playerData = value; } }
+    public float PlayerLocX { get { return _pLocX; } set { _pLocX = value; } }
+    public float PlayerLocY { get { return _pLocY; } set { _pLocY = value; } }
+    public bool Flipped { get { return _flipped; } set { _flipped = value; } }
 
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject[] scenes = GameObject.FindGameObjectsWithTag("SceneData");
+        GameObject data = null;
         _menu = GameObject.FindGameObjectWithTag("Menu").GetComponent<MainMenu>();
-        _data = null;
 
         foreach (GameObject scene in scenes)
         {
             if (scene.name.Equals(gameObject.name) && scene != gameObject)
             {
-                _data = scene;
-                _data.GetComponent<SceneData>().Menu = _menu;
-                _menu.Data = _data.GetComponent<SceneData>();
+                data = scene;
+                data.GetComponent<SceneData>().Menu = _menu;
+                data.GetComponent<SceneData>().UpdateMenuPlayerName();
+                _menu.Data = data.GetComponent<SceneData>();
                 Destroy(gameObject);
             }
         }
 
-        if (_data is null)
+        if (data is null)
         {
             _menu.Data = this;
+            _playerData = GameObject.FindGameObjectWithTag("PlayerData").GetComponent<PlayerData>();
             DontDestroyOnLoad(transform.gameObject);
         }
     }
 
     public void UpdateSceneInteractables()
     {
+        SetPlayerPosition();
         List<Interactable> interactables = Menu.Interactables;
 
         foreach (InteractableSubData save in Saves)
@@ -61,14 +71,15 @@ public class SceneData : MonoBehaviour
         }
     }
 
-    public List<InteractableSubData> GetInteractableScripts()
+    public List<InteractableSubData> GetInteractableScripts() // executed after SceneLoad
     {
+        SetPlayerPosition();
         List<Interactable> interactables = Menu.Interactables;
         List<InteractableSubData> scripts = new List<InteractableSubData>();
 
         for (int i = 0; i < interactables.Count; i++)
         {
-            GameObject saveFile = Instantiate(SaveDataPrefab, gameObject.transform);
+            GameObject saveFile = Instantiate(_saveDataPrefab, gameObject.transform);
             InteractableSubData saveData = saveFile.GetComponent<InteractableSubData>();
 
             // more attributes may be added in the future
@@ -96,5 +107,35 @@ public class SceneData : MonoBehaviour
                 }
             }
         }
+
+        SavePlayerPosition();
+    }
+
+    public void SetPlayerPosition()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player is not null)
+        {
+            player.transform.position = new Vector3(PlayerLocX, PlayerLocY, 0);
+            player.GetComponent<Player>().Avatar.flipX = Flipped;
+        }
+    }
+
+    public void SavePlayerPosition()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player is not null)
+        {
+            PlayerLocX = player.transform.position.x;
+            PlayerLocY = player.transform.position.y;
+            Flipped = player.GetComponent<Player>().Avatar.flipX;
+        }
+    }
+
+    public void UpdateMenuPlayerName()
+    {
+        GameObject textArea = Menu.OptionsMenu.transform.GetChild(0).GetChild(0).gameObject;
+        GameObject text = textArea.transform.GetChild(textArea.transform.childCount - 1).gameObject;
+        text.GetComponent<TextMeshProUGUI>().text = this.PlayerData.SaveData.Name;
     }
 }

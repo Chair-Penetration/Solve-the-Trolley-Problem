@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,10 +30,14 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < objects.Length; i++)
             Interactables.Add(objects[i].GetComponent<Interactable>());
 
-        if (Data is not null && Data.Saves.Count == 0)
-            Data.Saves = Data.GetInteractableScripts();
-        else if (Data is not null)
-            Data.UpdateSceneInteractables();
+        if (Data is not null)
+        {
+            if (Data.Saves.Count == 0)
+                Data.Saves = Data.GetInteractableScripts();
+            else
+                Data.UpdateSceneInteractables();
+            Data.UpdateMenuPlayerName();
+        }
     }
 
     public void LoadScene(int index)
@@ -68,5 +73,12 @@ public class MainMenu : MonoBehaviour
     public void PressReturnToMenu()
     {
         LoadScene(0);
+    }
+
+    public void ChangePlayerName()
+    {
+        GameObject textArea = OptionsMenu.transform.GetChild(0).GetChild(0).gameObject;
+        GameObject text = textArea.transform.GetChild(textArea.transform.childCount - 1).gameObject;
+        Data.PlayerData.SaveData.Name = text.GetComponent<TextMeshProUGUI>().text;
     }
 }
