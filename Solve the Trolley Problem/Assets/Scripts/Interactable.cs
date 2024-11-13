@@ -29,8 +29,7 @@ public class Interactable : MonoBehaviour
         _interaction = this.GetComponent<Collider2D>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _playerIBox = GameObject.FindGameObjectWithTag("PlayerIBox").GetComponent<Collider2D>();
-        _indicator = this.transform.GetChild(0).gameObject;
-        _dialogueBox = this.transform.GetChild(1).gameObject;
+        _dialogueBox.SetActive(false);
     }
 
     // Update is called once per frame

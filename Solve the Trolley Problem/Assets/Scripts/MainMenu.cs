@@ -37,7 +37,8 @@ public class MainMenu : MonoBehaviour
             else
                 Data.UpdateSceneInteractables();
             Data.SetPlayerPosition();
-            Data.UpdateMenuPlayerName();
+            if (Player is not null)
+                Player.gameObject.name = Data.UpdateMenuPlayerName();
         }
     }
 
@@ -88,6 +89,13 @@ public class MainMenu : MonoBehaviour
     {
         GameObject textArea = OptionsMenu.transform.GetChild(0).GetChild(0).gameObject;
         GameObject text = textArea.transform.GetChild(textArea.transform.childCount - 1).gameObject;
-        Data.PlayerData.SaveData.Name = text.GetComponent<TextMeshProUGUI>().text;
+        string newName = text.GetComponent<TextMeshProUGUI>().text.Trim();
+
+        if (newName is not null && !newName.Equals(""))
+        {
+            Data.PlayerData.SaveData.Name = newName;
+            Player.gameObject.name = newName;
+        } else
+            Data.UpdateMenuPlayerName();
     }
 }

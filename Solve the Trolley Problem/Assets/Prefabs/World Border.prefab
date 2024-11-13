@@ -16,14 +16,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9163435328032459381
-Transform:
+--- !u!224 &9163435328032459381
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436676669044235565}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,6 +34,11 @@ Transform:
   - {fileID: 4635849376106937891}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1289501666811223730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45,7 +49,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1644907795364540657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Name
-      value: Boundary (3)
+      value: Boundary Top
       objectReference: {fileID: 0}
     - target: {fileID: 2750293454797367023, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Color.b
@@ -167,7 +171,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1644907795364540657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Name
-      value: Boundary (2)
+      value: Boundary Right
       objectReference: {fileID: 0}
     - target: {fileID: 5886453877122752657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Pivot.x
@@ -273,7 +277,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1644907795364540657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Name
-      value: Boundary (1)
+      value: Boundary Bottom
       objectReference: {fileID: 0}
     - target: {fileID: 5886453877122752657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Pivot.x
@@ -379,7 +383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1644907795364540657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Name
-      value: Boundary
+      value: Boundary Left
       objectReference: {fileID: 0}
     - target: {fileID: 5886453877122752657, guid: a379090ef1a281d479d5b26e66c40165, type: 3}
       propertyPath: m_Pivot.x

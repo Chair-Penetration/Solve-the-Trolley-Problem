@@ -128,9 +128,10 @@ public class SceneData : MonoBehaviour
         }
     }
 
-    public void UpdateMenuPlayerName()
+    public string UpdateMenuPlayerName()
     {
         GameObject text = Menu.OptionsMenu.transform.GetChild(0).gameObject;
         text.GetComponent<TMP_InputField>().text = this.PlayerData.SaveData.Name;
+        return this.PlayerData.SaveData.Name;
     }
 }

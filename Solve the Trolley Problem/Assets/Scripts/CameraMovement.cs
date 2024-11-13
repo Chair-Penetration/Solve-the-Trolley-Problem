@@ -18,6 +18,12 @@ public class CameraMovement : MonoBehaviour
     public float MaxY { get { return _maxY; } set { _maxY = value; } }
 
 
+    void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        _player = player.GetComponent<Transform>();
+    }
+
     void FixedUpdate()
     {
         Vector3 desiredPosition = Player.position + Offset;
