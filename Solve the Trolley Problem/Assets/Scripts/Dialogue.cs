@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Dialogue : MonoBehaviour
 {
-    [SerializeField] private string _speakerName;
-    [SerializeField] private TextMeshProUGUI _tmp;
+    [SerializeField] private GameObject _nameCard;
+    [SerializeField] private Conversation _conversation;
+    [SerializeField] private TextMeshProUGUI _tmpSpeakerName;
+    [SerializeField] private TextMeshProUGUI _tmpDialogue;
 
-    public string SpeakerName { get { return _speakerName; } set { _speakerName = value; } }
-    public string Text { get { return _tmp.text; } set { _tmp.text = value; } }
+    public GameObject NameCard { get { return _nameCard; } }
+    public Conversation Conversation { get { return _conversation; } set { _conversation = value; } }
+    public string SpeakerName { get { return _tmpSpeakerName.text; } set { _tmpSpeakerName.text = value; } }
+    public string Text { get { return _tmpDialogue.text; } set { _tmpDialogue.text = value; } }
+
 }
